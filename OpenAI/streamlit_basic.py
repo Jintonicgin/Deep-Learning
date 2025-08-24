@@ -9,12 +9,15 @@ openai_api_key = os.getenv("OPENAI_API_KEY")
 client = OpenAI(api_key=openai_api_key)
 st.title("Chatbot")
 
+# st.session_state에 "messages"가 없으면 초기값을 설정
 if "messages" not in st.session_state:
     st.session_state["messages"] = [{"role": "assistant", "content": "How can I help you?"}]
 
+# 대화기록을 출력
 for msg in st.session_state.messages:
     st.chat_message(msg["role"]).write(msg["content"])
 
+# 사용자 입력을 받아 대화 기록에 추가하고 AI 응답을 생성
 if prompt := st.chat_input():
     if not openai_api_key:
         st.info("Please add your OpenAI API key to continue")
